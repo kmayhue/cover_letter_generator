@@ -32,13 +32,19 @@ def main():
         print(f"Error: Job directory '{job_dir}' not found.")
         sys.exit(1)
         
-    job_description = read_file(os.path.join(job_dir, "job_description.md"))
-    if not job_description:
-        print(f"Error: job_description.md not found in {job_dir}")
+    jd_path = os.path.join(job_dir, "job_description.md")
+    if not os.path.exists(jd_path):
+        print(f"Error: {jd_path} not found.")
         sys.exit(1)
+    job_description = read_file(jd_path)
         
+    resume_path = "user_info/resume.md"
+    if not os.path.exists(resume_path):
+        print(f"Error: {resume_path} not found.")
+        sys.exit(1)
+
     job_application = read_file(os.path.join(job_dir, "job_application.md"))
-    resume = read_file("user_info/resume.md")
+    resume = read_file(resume_path)
     experiences = read_file("user_info/experiences.md")
     
     example_cover_letters = ""
