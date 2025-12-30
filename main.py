@@ -78,17 +78,24 @@ def main():
         prompt = f"{context}\n\nBased on the above information, please generate a list of likely interview questions and suggest strong answers based on my resume and experiences."
 
     # Execute Gemini CLI
-    # Assuming the CLI is available as 'gemini' and accepts a prompt via stdin or argument.
-    # We'll use subprocess to run it. 
+    print(f"Generating {args.tool.replace('_', ' ')} using {args.model}...")
+    
     try:
         # Using pipe to send prompt to gemini-cli
-        process = subprocess.Popen(['gemini', '--model', args.model], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
-        stdout, stderr = process.communicate(input=prompt)
+        result = subprocess.run(
+            ['gemini', '--model', args.model],
+            input=prompt,
+            capture_output=True,
+            text=True
+        )
         
-        if process.returncode != 0:
-            print(f"Error from Gemini CLI: {stderr}")
+        if result.returncode != 0:
+            print(f"Error from Gemini CLI: {result.stderr}", file=sys.stderr)
+            sys.exit(result.returncode)
         else:
-            print(stdout)
+            print("\n" + "="*40 + "\n")
+            print(result.stdout)
+            print("\n" + "="*40)
             
     except FileNotFoundError:
         print("Error: 'gemini' CLI not found. Please ensure it is installed and in your PATH.")
