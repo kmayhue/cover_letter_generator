@@ -73,17 +73,19 @@ def main():
     """
 
     if args.tool == "cover_letter":
-        prompt = f"{context}\n\nBased on the above information, please generate a professional cover letter and answer any questions found in the job application specifics or job description."
+        output_file = os.path.join(job_dir, "cover_letter.md")
+        prompt = f"{context}\n\nBased on the above information, please generate a professional cover letter and answer any questions found in the job application specifics or job description. SAVE the final cover letter to '{output_file}' using your tools. Do not include any preamble or postamble in the file content."
     elif args.tool == "interview_prep":
-        prompt = f"{context}\n\nBased on the above information, please generate a list of likely interview questions and suggest strong answers based on my resume and experiences."
+        output_file = os.path.join(job_dir, "interview_prep.md")
+        prompt = f"{context}\n\nBased on the above information, please generate a list of likely interview questions and suggest strong answers based on my resume and experiences. SAVE the result to '{output_file}' using your tools. Do not include any preamble or postamble in the file content."
 
     # Execute Gemini CLI
     print(f"Generating {args.tool.replace('_', ' ')} using {args.model}...")
     
     try:
-        # Using pipe to send prompt to gemini-cli
+        # Using --yolo to allow the agent to write the file without manual approval
         result = subprocess.run(
-            ['gemini', '--model', args.model],
+            ['gemini', '--model', args.model, '--yolo'],
             input=prompt,
             capture_output=True,
             text=True
@@ -93,9 +95,13 @@ def main():
             print(f"Error from Gemini CLI: {result.stderr}", file=sys.stderr)
             sys.exit(result.returncode)
         else:
-            print("\n" + "="*40 + "\n")
-            print(result.stdout)
-            print("\n" + "="*40)
+            print(f"\nSuccess! {args.tool.replace('_', ' ')} has been generated and saved.")
+            if os.path.exists(output_file):
+                print(f"File saved to: {output_file}")
+            
+    except FileNotFoundError:
+        print("Error: 'gemini' CLI not found. Please ensure it is installed and in your PATH.")
+        sys.exit(1)
             
     except FileNotFoundError:
         print("Error: 'gemini' CLI not found. Please ensure it is installed and in your PATH.")
