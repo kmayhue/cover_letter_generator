@@ -43,7 +43,8 @@ def main():
         print(f"Error: {resume_path} not found.")
         sys.exit(1)
 
-    job_application = read_file(os.path.join(job_dir, "job_application.md"))
+    job_application_path = os.path.join(job_dir, "job_application.md")
+    job_application = read_file(job_application_path)
     resume = read_file(resume_path)
     experiences = read_file("user_info/experiences.md")
     
@@ -72,12 +73,16 @@ def main():
     {example_cover_letters}
     """
 
+    application_update_instruction = ""
+    if job_application:
+        application_update_instruction = f"Additionally, please update the file '{job_application_path}' by filling out answers to any questions it contains or refining any existing responses to ensure they are high-quality and tailored to the job description and my experiences."
+
     if args.tool == "cover_letter":
         output_file = os.path.join(job_dir, "cover_letter.md")
-        prompt = f"{context}\n\nBased on the above information, please generate a professional cover letter and answer any questions found in the job application specifics or job description. SAVE the final cover letter to '{output_file}' using your tools. Do not include any preamble or postamble in the file content."
+        prompt = f"{context}\n\nBased on the above information, please generate a professional cover letter. SAVE the final cover letter to '{output_file}' using your tools. Do not include any preamble or postamble in the file content. {application_update_instruction}"
     elif args.tool == "interview_prep":
         output_file = os.path.join(job_dir, "interview_prep.md")
-        prompt = f"{context}\n\nBased on the above information, please generate a list of likely interview questions and suggest strong answers based on my resume and experiences. SAVE the result to '{output_file}' using your tools. Do not include any preamble or postamble in the file content."
+        prompt = f"{context}\n\nBased on the above information, please generate a list of likely interview questions and suggest strong answers based on my resume and experiences. SAVE the result to '{output_file}' using your tools. Do not include any preamble or postamble in the file content. {application_update_instruction}"
 
     # Execute Gemini CLI
     print(f"Generating {args.tool.replace('_', ' ')} using {args.model}...")

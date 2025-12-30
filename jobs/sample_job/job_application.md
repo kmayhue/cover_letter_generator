@@ -1,0 +1,3 @@
+## PQuestion 1: Why do you want to work here?
+
+I am eager to join a team where I can apply my expertise in building scalable, production-grade data infrastructure to solve complex technical challenges. Throughout my career at companies ranging from high-growth startups like EarthOptics to industry leaders like Meta, I have found that I am most motivated when I am creating robust data systems that empower organizations to make data-driven decisions. I am particularly drawn to this role because it offers the opportunity to leverage my skills in GCP, BigQuery, and Python to drive innovation and efficiency within your data ecosystem.
