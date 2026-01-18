@@ -9,7 +9,7 @@
 ## Role: Data Engineer
 *[Start Date] – [End Date]*
 
-### Project: Built out the sentinel 1/2 pipeline that utilized kubernetes, postgresql, python, geoparquey, geopandas, a queueing system
+### Project: Built out the sentinel 1/2 pipeline that utilized kubernetes, postgresql, python, geoparquet, geopandas, a queueing system
 - **Context:** The specific challenge for this project.
 - **Action:** Your technical or leadership contribution.
 - **Result:** The outcome (e.g., "Increased efficiency by 20%").
@@ -126,6 +126,13 @@
 
 
 ### Project: Created data pipeline scripts that pulled data from Googles Geocoding and Google Maps APIs.
+- **Context:** ...
+- **Action:** ...
+- **Result:** ...
+- **Tags:** #Skill3, #Skill4
+
+
+### Project: Implemented brute force optimization algorithms on top of Google Maps API data
 - **Context:** ...
 - **Action:** ...
 - **Result:** ...
